@@ -5,3 +5,4 @@ test-output/
 .project
 *.class
 *.log
+.DS_Store
