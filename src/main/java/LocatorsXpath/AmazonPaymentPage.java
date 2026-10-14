@@ -22,11 +22,11 @@ public class AmazonPaymentPage {
 		driver.manage().window().maximize();
 		Thread.sleep(3000);
 		WebElement e1 = driver.findElement(By.xpath("//span[text()='Hello, sign in']"));
-		Actions a1= new Actions (driver);
+		Actions a1 = new Actions(driver);
 		a1.moveToElement(e1).perform();
 		Thread.sleep(3000);
-	WebElement e2 =	driver.findElement(By.linkText("Sign in"));
-	
+		WebElement e2 = driver.findElement(By.linkText("Sign in"));
+
 		e2.click();
 		Thread.sleep(3000);
 		WebElement login = driver.findElement(By.name("email"));
@@ -64,10 +64,13 @@ public class AmazonPaymentPage {
 		WebElement Checkout = driver.findElement(By.name("proceedToRetailCheckout"));
 		Checkout.click();
 		Thread.sleep(3000);
-		//WebElement COD = driver.findElement(By.xpath("//div[@id='checkout-paymentOptionPanel']/descendant::span[text()='Cash on Delivery/Pay on Delivery']/parent::span/preceding-sibling::input"));
-		//COD.click();
-		WebElement COD = driver.findElement(By.xpath("//div[@id='checkout-paymentOptionPanel']/descendant::span[text()='EMI']/parent::span/preceding-sibling::input"));
-				COD.click();
+		// WebElement COD =
+		// driver.findElement(By.xpath("//div[@id='checkout-paymentOptionPanel']/descendant::span[text()='Cash
+		// on Delivery/Pay on Delivery']/parent::span/preceding-sibling::input"));
+		// COD.click();
+		WebElement COD = driver.findElement(By.xpath(
+				"//div[@id='checkout-paymentOptionPanel']/descendant::span[text()='EMI']/parent::span/preceding-sibling::input"));
+		COD.click();
 //		WebElement credit = driver.findElement(By.xpath("//input[@value='SelectableAddCreditCard']"));
 //		credit.click();
 //		WebElement addcreditcard = driver.findElement(By.linkText("Add a new credit or debit card"));
@@ -88,7 +91,7 @@ public class AmazonPaymentPage {
 //		
 //		WebElement conti = driver.findElement(By.xpath("//span[text()='Continue']"));
 //		conti.click();
-		
+
 	}
 
 }

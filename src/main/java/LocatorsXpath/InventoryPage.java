@@ -8,31 +8,30 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.Duration;
 
 public class InventoryPage {
-    WebDriver driver;
+	WebDriver driver;
 
-    By pageTitle  = By.className("title");
-    By cartBadge  = By.className("shopping_cart_badge");
+	By pageTitle = By.className("title");
+	By cartBadge = By.className("shopping_cart_badge");
 
-    public InventoryPage(WebDriver driver) {
-        this.driver = driver;
-    }
+	public InventoryPage(WebDriver driver) {
+		this.driver = driver;
+	}
 
-    public boolean isDisplayed() {
-        return driver.findElement(pageTitle).getText().equals("Products");
-    }
+	public boolean isDisplayed() {
+		return driver.findElement(pageTitle).getText().equals("Products");
+	}
 
-    public void addProductToCart(String productName) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+	public void addProductToCart(String productName) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        By buttonLocator = By.xpath(
-            "//div[text()='" + productName + "']/ancestor::div[@class='inventory_item']//button"
-        );
+		By buttonLocator = By
+				.xpath("//div[text()='" + productName + "']/ancestor::div[@class='inventory_item']//button");
 
-        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(buttonLocator));
-        button.click();
-    }
+		WebElement button = wait.until(ExpectedConditions.elementToBeClickable(buttonLocator));
+		button.click();
+	}
 
-    public String getCartCount() {
-        return driver.findElement(cartBadge).getText();
-    }
+	public String getCartCount() {
+		return driver.findElement(cartBadge).getText();
+	}
 }
