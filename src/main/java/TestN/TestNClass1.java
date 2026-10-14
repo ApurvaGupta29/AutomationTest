@@ -9,14 +9,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 import org.testng.annotations.Test;
 
-public class TestNClass1 
+public class TestNClass1
 
 {
 
 	@Test
-	
-	public void method() throws InterruptedException
-	{
+
+	public void method() throws InterruptedException {
 		ChromeDriver driver = new ChromeDriver();
 		driver.get("https://www.google.com");
 
@@ -33,7 +32,7 @@ public class TestNClass1
 			System.out.println(url);
 			String text2 = e2.getTagName();
 			System.out.println(text2);
-	}
-	
+		}
+
 	}
 }
