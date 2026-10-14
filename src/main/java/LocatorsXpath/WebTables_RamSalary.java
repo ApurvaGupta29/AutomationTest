@@ -13,13 +13,12 @@ public class WebTables_RamSalary {
 		driver.get("file:///Users/rk/Documents/Apurva_Project/employee.html");
 		driver.manage().window().maximize();
 		Thread.sleep(3000);
-	List<WebElement> Salary = driver.findElements(By.xpath("(//td[text()='Ram']/following-sibling::td)[2]"));
-	for(int i =0;i<Salary.size();i++)
-	{
-WebElement e2 = Salary.get(i);
+		List<WebElement> Salary = driver.findElements(By.xpath("(//td[text()='Ram']/following-sibling::td)[2]"));
+		for (int i = 0; i < Salary.size(); i++) {
+			WebElement e2 = Salary.get(i);
 
-System.out.print(e2.getText());
+			System.out.print(e2.getText());
+		}
+
 	}
-
-}
 }

@@ -25,7 +25,7 @@ public class NaukriSwitchWindow {
 				break;
 			}
 		}
-driver.close();
+		driver.close();
 //System.out.println(pcid);
 //Iterator <String> id = pcid.iterator();
 //String pid=id.next();

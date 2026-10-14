@@ -42,7 +42,6 @@ public class AmazonSwitchControltoChild {
 		Thread.sleep(3000);
 		WebElement e3 = driver.findElement(By.id("add-to-cart-button"));
 		e3.click();
-		
 
 	}
 

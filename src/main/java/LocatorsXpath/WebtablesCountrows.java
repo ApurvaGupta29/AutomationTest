@@ -13,9 +13,9 @@ public class WebtablesCountrows {
 		driver.get("file:///Users/rk/Documents/Apurva_Project/employee.html");
 		driver.manage().window().maximize();
 		Thread.sleep(3000);
-	List<WebElement> rows = driver.findElements(By.xpath("//table[@id='employeeTable']/descendant::tbody/tr"));
+		List<WebElement> rows = driver.findElements(By.xpath("//table[@id='employeeTable']/descendant::tbody/tr"));
 
-System.out.println(rows.size());//gives count of rows 
+		System.out.println(rows.size());// gives count of rows
 
 	}
 
