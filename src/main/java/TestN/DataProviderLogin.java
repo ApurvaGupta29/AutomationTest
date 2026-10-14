@@ -6,8 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class DataProviderLogin 
-{
+public class DataProviderLogin {
 
 	@Test
 	public void SearchList(String input)throws InterruptedException
@@ -23,7 +22,7 @@ e1.sendKeys(input+Keys.ENTER);
 Thread.sleep(2000);
 driver.quit();
 
-		@DataProvider
+	@DataProvider
 		public Object getdata()
 		{
 		Object[][] data = new Object[][]
@@ -32,13 +31,5 @@ driver.quit();
 		        data[][]="";
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-    
+
 }

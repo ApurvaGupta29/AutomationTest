@@ -8,7 +8,7 @@ public class BaseClassListner extends ListnersLogic {
 
 	@BeforeMethod
 	public void LaunchBrowser() {
-driver=new ChromeDriver();
+		driver = new ChromeDriver();
 		driver.get("https://www.google.com");
 		driver.manage().window().maximize();
 	}

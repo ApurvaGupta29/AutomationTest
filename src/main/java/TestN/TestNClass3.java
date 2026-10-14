@@ -10,69 +10,63 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-
-public class TestNClass3 
-{
+public class TestNClass3 {
 	@Test
-	public void method2()
-	{
+	public void method2() {
 		System.out.println("Test case");
 	}
+
 	@Test
-	public static void method11()
-	{
+	public static void method11() {
 		System.out.println("Test case 1");
 
 	}
-	@BeforeSuite 
-	public void bs() 
-	{
+
+	@BeforeSuite
+	public void bs() {
 		System.out.println("BS");
 
 	}
+
 	@BeforeTest
-	public void bt() 
-	{
+	public void bt() {
 		System.out.println("BT");
 
 	}
+
 	@BeforeClass
-	public void bc() 
-	{
+	public void bc() {
 		System.out.println("BC");
 
 	}
-	@BeforeMethod //bodyguard
-	public void bm() 
-	{
+
+	@BeforeMethod // bodyguard
+	public void bm() {
 		System.out.println("BM");
 
 	}
+
 	@AfterSuite
-	public void as() 
-	{
+	public void as() {
 		System.out.println("AS");
 
 	}
+
 	@AfterTest
-	public void at() 
-	{
+	public void at() {
 		System.out.println("AT");
 
 	}
+
 	@AfterClass
-	public void ac() 
-	{
+	public void ac() {
 		System.out.println("AC");
 
 	}
-	@AfterMethod //bodyguard
-	public void am() 
-	{
+
+	@AfterMethod // bodyguard
+	public void am() {
 		System.out.println("AM");
 
 	}
 }
-
-
-

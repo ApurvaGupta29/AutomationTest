@@ -13,11 +13,11 @@ public class ListnerCase3 extends BaseClassListner
 {
 	@Test
 
-	public void tc3()throws InterruptedException {
-		
-			Thread.sleep(3000);
-			WebElement e1= driver.findElement(By.xpath("//textarea"));
-			e1.sendKeys("Hanuman");
-}
+	public void tc3() throws InterruptedException {
+
+		Thread.sleep(3000);
+		WebElement e1 = driver.findElement(By.xpath("//textarea"));
+		e1.sendKeys("Hanuman");
+	}
 
 }

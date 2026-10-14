@@ -11,8 +11,8 @@ public class RetryLogic implements IRetryAnalyzer
 
 	@Override
 	public boolean retry(ITestResult result) {
-		if(initialcount<retrycount) {
-			
+		if (initialcount < retrycount) {
+
 			initialcount++;
 			return true;
 		}
