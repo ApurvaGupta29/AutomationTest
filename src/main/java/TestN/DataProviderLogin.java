@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 public class DataProviderLogin {
 
-	@Test
+	@Test(dataProvider="datasearching")
 	public void SearchList(String input) throws InterruptedException {
 		ChromeDriver driver = new ChromeDriver();
 		driver.get("https://www.amazon.in");
@@ -22,12 +22,12 @@ public class DataProviderLogin {
 	}
 
 	@DataProvider
-	public Object[][] getdata() {
-		Object[][] data = new Object[3][1];
-		data[0][0] = "laptop";
-		data[1][0] = "phone";
-		data[2][0] = "headphones";
-		return data;
+	public Object datasearching() {
+		Object[][] d1 = new Object[3][1];
+		d1[0][0] = "laptop";
+		d1[1][0] = "phone";
+		d1[2][0] = "headphones";
+		return d1;
 	}
 
 }
