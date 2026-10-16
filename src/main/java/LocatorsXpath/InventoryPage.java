@@ -32,6 +32,7 @@ public class InventoryPage {
 	}
 
 	public String getCartCount() {
-		return driver.findElement(cartBadge).getText();
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		return wait.until(ExpectedConditions.visibilityOfElementLocated(cartBadge)).getText();
 	}
 }
