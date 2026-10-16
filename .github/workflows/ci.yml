@@ -53,3 +53,58 @@ jobs:
             target/surefire-reports/
             test-output/
           if-no-files-found: ignore
+
+      - name: Build report site
+        if: always()
+        run: |
+          mkdir -p report
+          [ -d target/surefire-reports ] && cp -r target/surefire-reports/. report/ || true
+          [ -d test-output ] && cp -r test-output/. report/ || true
+          if [ ! -f report/index.html ]; then
+            {
+              echo "<!doctype html><meta charset=utf-8><title>Test report</title><h1>Test report</h1><ul>"
+              (cd report && find . -type f \( -name '*.html' -o -name '*.txt' -o -name '*.xml' \) | sort | sed 's#^\./##; s#.*#<li><a href="&">&</a></li>#')
+              echo "</ul>"
+            } > report/index.html
+          fi
+
+      - name: Upload report site
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-site
+          path: report/
+
+  # CD: publish the test report to GitHub Pages, only after CI passes and only from master.
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/master' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Download report site
+        uses: actions/download-artifact@v4
+        with:
+          name: report-site
+          path: report
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: report
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
