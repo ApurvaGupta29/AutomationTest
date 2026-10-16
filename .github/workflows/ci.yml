@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  schedule:
+    # Nightly regression, 02:00 UTC (7:30 AM IST)
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Run TestNG suite
+        # Tests launch a normal (non-headless) ChromeDriver, so run under a virtual display.
+        # Chrome is preinstalled on ubuntu-latest; Selenium Manager fetches the matching driver.
+        run: xvfb-run --auto-servernum mvn -B test -Dsurefire.suiteXmlFiles=testng.xml
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: |
+            target/surefire-reports/
+            test-output/
+          if-no-files-found: ignore
