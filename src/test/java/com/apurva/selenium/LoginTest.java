@@ -28,7 +28,7 @@ public class LoginTest {
     @Test
     public void testInvalidLogin() {
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.login("standard_user", "wrong_password");
+        loginPage.attemptLogin("standard_user", "wrong_password");
         Assert.assertEquals(loginPage.getErrorMessage(),
                 "Epic sadface: Username and password do not match any user in this service");
     }

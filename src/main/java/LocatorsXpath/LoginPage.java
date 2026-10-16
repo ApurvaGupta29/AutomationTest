@@ -18,10 +18,15 @@ public class LoginPage {
 		this.driver = driver;
 	}
 
-	public InventoryPage login(String username, String password) {
+	// Fills the form and clicks Login without waiting for any particular result.
+	public void attemptLogin(String username, String password) {
 		driver.findElement(usernameField).sendKeys(username);
 		driver.findElement(passwordField).sendKeys(password);
 		driver.findElement(loginButton).click();
+	}
+
+	public InventoryPage login(String username, String password) {
+		attemptLogin(username, password);
 
 		// wait until the inventory page's title actually appears
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -31,6 +36,7 @@ public class LoginPage {
 	}
 
 	public String getErrorMessage() {
-		return driver.findElement(errorMessage).getText();
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		return wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessage)).getText();
 	}
 }
