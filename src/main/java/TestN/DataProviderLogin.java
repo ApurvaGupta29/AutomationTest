@@ -9,12 +9,11 @@ import org.testng.annotations.Test;
 
 public class DataProviderLogin {
 
-	@Test(dataProvider = "getdata")
+	@Test
 	public void SearchList(String input) throws InterruptedException {
 		ChromeDriver driver = new ChromeDriver();
 		driver.get("https://www.amazon.in");
 		driver.manage().window().maximize();
-
 		Thread.sleep(3000);
 		WebElement e1 = driver.findElement(By.id("twotabsearchtextbox"));
 		e1.sendKeys(input + Keys.ENTER);
