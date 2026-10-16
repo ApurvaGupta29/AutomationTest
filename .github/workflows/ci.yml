@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  schedule:
+    # Nightly regression, 02:00 UTC (7:30 AM IST)
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Install a window manager for the virtual display
+        # Chrome's maximize() fails on a bare Xvfb display without a window manager.
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fluxbox
+
+      - name: Run TestNG suite
+        # Tests launch a normal (non-headless) ChromeDriver, so run under a virtual display.
+        # Chrome is preinstalled on ubuntu-latest; Selenium Manager fetches the matching driver.
+        run: |
+          set -o pipefail
+          xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" \
+            bash -c 'fluxbox >/dev/null 2>&1 & sleep 2; mvn -B test -Dsurefire.suiteXmlFiles=testng.xml' 2>&1 | tee mvn.log
+
+      - name: Show Maven errors
+        if: failure()
+        run: |
+          MSG=$(grep -E 'ERROR|Tests run:|FAIL|xvfb|not found' mvn.log | head -40 | cut -c1-300 | sed ':a;N;$!ba;s/\n/%0A/g')
+          echo "::error title=Maven failure::$MSG"
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: |
+            target/surefire-reports/
+            test-output/
+          if-no-files-found: ignore
