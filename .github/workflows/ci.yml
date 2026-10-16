@@ -29,7 +29,15 @@ jobs:
       - name: Run TestNG suite
         # Tests launch a normal (non-headless) ChromeDriver, so run under a virtual display.
         # Chrome is preinstalled on ubuntu-latest; Selenium Manager fetches the matching driver.
-        run: xvfb-run --auto-servernum mvn -B test -Dsurefire.suiteXmlFiles=testng.xml
+        run: |
+          set -o pipefail
+          xvfb-run --auto-servernum mvn -B test -Dsurefire.suiteXmlFiles=testng.xml 2>&1 | tee mvn.log
+
+      - name: Show Maven errors
+        if: failure()
+        run: |
+          MSG=$(grep -E 'ERROR|Tests run:|FAIL|xvfb|not found' mvn.log | head -25 | cut -c1-300 | sed ':a;N;$!ba;s/\n/%0A/g')
+          echo "::error title=Maven failure::$MSG"
 
       - name: Upload test reports
         if: always()
