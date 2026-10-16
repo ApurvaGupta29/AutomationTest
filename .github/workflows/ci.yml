@@ -31,12 +31,12 @@ jobs:
         # Chrome is preinstalled on ubuntu-latest; Selenium Manager fetches the matching driver.
         run: |
           set -o pipefail
-          xvfb-run --auto-servernum mvn -B test -Dsurefire.suiteXmlFiles=testng.xml 2>&1 | tee mvn.log
+          xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" mvn -B test -Dsurefire.suiteXmlFiles=testng.xml 2>&1 | tee mvn.log
 
       - name: Show Maven errors
         if: failure()
         run: |
-          MSG=$(grep -E 'ERROR|Tests run:|FAIL|xvfb|not found' mvn.log | head -25 | cut -c1-300 | sed ':a;N;$!ba;s/\n/%0A/g')
+          MSG=$(grep -E 'ERROR|Tests run:|FAIL|xvfb|not found' mvn.log | head -40 | cut -c1-300 | sed ':a;N;$!ba;s/\n/%0A/g')
           echo "::error title=Maven failure::$MSG"
 
       - name: Upload test reports
