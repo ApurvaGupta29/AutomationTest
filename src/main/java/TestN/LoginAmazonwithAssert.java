@@ -1,38 +1,45 @@
 package TestN;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 public class LoginAmazonwithAssert extends BaseClass
 
 {
-@Test
+	@Test
+	public void logintoAmazon() {
 
-public void logintoAmazon() throws InterruptedException {
+		// Credentials come from environment variables, never from the source code
+		String user = System.getenv("AMAZON_USER");
+		String pass = System.getenv("AMAZON_PASS");
+		if (user == null || pass == null) {
+			throw new SkipException("AMAZON_USER / AMAZON_PASS not set - skipping login test");
+		}
 
-	Thread.sleep(3000);
-	WebElement e1 = driver.findElement(By.xpath("//span[text()='Hello, sign in']"));
-	Actions a1 = new Actions(driver);
-	a1.moveToElement(e1).perform();
-	Thread.sleep(3000);
-	WebElement e2 = driver.findElement(By.linkText("Sign in"));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
-	e2.click();
-	Thread.sleep(3000);
-	WebElement login = driver.findElement(By.name("email"));
-	login.sendKeys("9891718014");
-	WebElement Continue = driver.findElement(By.xpath("//input[@type='submit']"));
-	Continue.click();
-	Thread.sleep(3000);
-	WebElement pswd = driver.findElement(By.xpath("//input[@type='password']"));
-	pswd.sendKeys("Demo@123456789");
-	WebElement Signin = driver.findElement(By.id("signInSubmit"));
-	Signin.click();
-Assert.assertEquals(driver.getTitle(), "Online Shopping site in India: Shop Online for Mobiles, Books, Watches, Shoes and More - Amazon.in");
-	
-}
-	
+		WebElement e1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nav-link-accountList")));
+		new Actions(driver).moveToElement(e1).perform();
+
+		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Sign in"))).click();
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("email"))).sendKeys(user);
+		driver.findElement(By.xpath("//input[@type='submit']")).click();
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='password']")))
+				.sendKeys(pass);
+		driver.findElement(By.id("signInSubmit")).click();
+
+		wait.until(ExpectedConditions.titleContains("Amazon"));
+		Assert.assertTrue(driver.getTitle().contains("Amazon.in"), "Unexpected title: " + driver.getTitle());
+	}
+
 }
