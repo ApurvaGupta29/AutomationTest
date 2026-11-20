@@ -21,6 +21,8 @@ public class AmazonActionClass {
 		// a1.contextClick(e1).perform();//right click
 		// a1.doubleClick(e1).perform();//double click
 
+		
+		
 		// a1.dragAndDrop(e1, e2);
 
 	}
